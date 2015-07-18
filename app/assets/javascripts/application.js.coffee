@@ -19,3 +19,12 @@ Baozi.tabSelectorInit = ->
   nowBtn.on 'click', ->
     mainContentWrapper.removeClass('fav-actived')
 
+# 選擇包子的 function
+Baozi.baoziSelectorInit = ->
+  baoziList = $('.baozi-list-wrapper .baozi-list')
+
+  baoziList.on 'click', '.baozi-unit', ->
+    # console.log('test')
+    baoziList.find('.actived').removeClass('actived')
+    $(@).addClass('actived')
+  # todo: ajax
