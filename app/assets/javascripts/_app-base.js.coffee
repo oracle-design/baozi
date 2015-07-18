@@ -1,2 +1,2 @@
 root = exports ? this
-root.AppName = {}
+root.Baozi = {}

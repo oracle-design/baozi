@@ -17,7 +17,7 @@
     </div>
 
     <!-- Main content -->
-    <div class="main-content-wrapper">
+    <div class="main-content-wrapper trans-05s">
 
       <!-- Baozi list -->
       <div class="baozi-list-wrapper row">
@@ -68,3 +68,9 @@
     </div>
   </div>
 </div>
+
+<%= content_for :handwrite_js do %>
+  <script>
+    $(document).ready(Baozi.tabSelectorInit());
+  </script>
+<% end %>
