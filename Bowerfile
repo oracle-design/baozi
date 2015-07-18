@@ -1,0 +1,5 @@
+# basic asset
+asset 'susy'
+asset 'breakpoint-sass'
+asset 'sassy-buttons'
+asset 'modernizr'
