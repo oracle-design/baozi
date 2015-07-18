@@ -45,42 +45,19 @@
           </ul>
         </div>
         <div class="chat-content-wrapper">
-          <div class="message-wrapper target">
-            <div class="user-info row">
-              <div class="info">
-                <span class="avatar">
-                  <img src="https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg" alt="">
-                </span>
-                <span class="name">
-                  Deja Hauck
-                </span>
-              </div>
-            </div>
-            <div class="message-content">
-              <p><%= Faker::Lorem.sentence %></p>
-              <p><%= Faker::Lorem.sentence %></p>
-            </div>
-          </div>
-
-          <div class="message-wrapper self">
-            <div class="user-info row">
-              <div class="info">
-                <span class="avatar">
-                  <img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" alt="">
-                </span>
-                <span class="name">
-                  pixeliris
-                </span>
-              </div>
-            </div>
-            <div class="message-content">
-              <p><%= Faker::Lorem.sentence %></p>
-              <p><%= Faker::Lorem.sentence %></p>
-            </div>
-          </div>
+          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
+          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
         </div>
         <div class="chat-form-wrapper">
-
+          <form action="#">
+            <textarea type="text" placeholder="What's in your mind...?"></textarea>
+          </form>
         </div>
       </div>
 

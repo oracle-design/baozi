@@ -130,6 +130,7 @@
       height: 420px
       padding: 10px
       border: 1px solid $warm-grey
+      overflow-y: scroll
       .message-wrapper
         .user-info
           line-height: $avatar-width
@@ -147,7 +148,7 @@
               margin: 0
               margin-bottom: .5em
 
-        &.target
+        &.baozi
           .user-info
             .info
               float: left
@@ -172,11 +173,18 @@
 
 
     .chat-form-wrapper
-      height: 100px
       margin-top: 15px
       margin-bottom: 10px
       padding: 10px
       border: 1px solid $warm-grey
+      textarea
+        +reset-focus
+        width: 100%
+        height: 80px
+        border: none
+        resize: none
+
+
 
   .send-message
     +sassy-button("flat", 10px, $fz-m, $khaki-green)
