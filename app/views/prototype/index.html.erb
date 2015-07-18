@@ -61,6 +61,11 @@
           </form>
         </div>
       </div>
+      <div>
+      <input id="name" size="15" type="text" value="NAME">
+      <input id="message" size="80" type="text" value="hello hello">
+      <input id="btn_post" type="button" value="post">
+    </div>
 
       <!-- send message button -->
       <div class="row">
@@ -77,3 +82,7 @@
     $(document).ready(Baozi.sendMessageBtnInit());
   </script>
 <% end %>
+
+<script>
+  var dispatcher = new WebSocketRails('localhost:3000/websocket');
+</script>
