@@ -1,0 +1,145 @@
+.female-main-ui-wrapper
+  margin-top: 80px
+
+  $logo-bar-height: 45px
+  $tab-btn-height: 35px
+  $option-btn-width: 315px
+
+  // reset ul element default style
+  ul
+    +reset-list-style
+    +reset-box-model
+
+  // 最上面的 LOGO bar
+  .logo-bar
+    width: 100%
+    height: $logo-bar-height
+    background-color: $golden-yellow
+    color: $white
+    line-height: $logo-bar-height
+    text-align: center
+
+  // Tab 按鈕區塊
+  .tab-btn-wrapper
+    color: $white
+    text-align: center
+    .tab-btn
+      display: block
+      +span(6)
+      height: $tab-btn-height
+      line-height: $tab-btn-height
+      font-weight: bold
+      color: $white
+      text-decoration: none
+    .now
+      background-color: $lipstick
+      &:hover
+        background-color: darken($lipstick, 5)
+    .favorite
+      background-color: $aqua-marine
+      &:hover
+        background-color: darken($aqua-marine, 5)
+
+  // 主要內容區塊
+  .main-content-wrapper
+    padding: 10px
+    padding-bottom: 50px
+    border: 3px solid $lipstick
+    background-image: asset-url('worn_dots.png')
+    +image-2x('worn_dots_@2X.png', 200px, 200px)
+    &.fav-actived
+      border: 3px solid $aqua-marine
+
+    // 對象列表區塊
+    .baozi-list-wrapper
+      .baozi-list
+        +span(11)
+        padding-right: 10px
+        .baozi-unit
+          display: block
+          +span(2)
+          padding: 10px
+          padding-top: 20px
+          height: 170px
+          cursor: pointer
+          font-size: $fz-s
+          font-weight: lighter
+          text-align: center
+          img
+            max-width: 65%
+            display: block
+            @extend %m0auto
+            +border-radius(50%)
+          span
+            display: inline-block
+            margin-top: .8em
+          &.actived
+            background-color: $white
+            border: 1px solid $pinkish-grey
+            border-bottom: none
+            font-weight: bolder
+
+      .next-round-btn
+        display: block
+        +span(1)
+        height: 150px
+        padding-top: 60px
+        background-color: $white
+        border: 1px solid $pinkish-grey
+        color: $warm-grey
+        text-align: center
+        text-decoration: none
+        &:hover
+          background-color: $white-84
+          border: 1px solid $warm-grey
+
+    // 選項與詳細聊天區塊
+    .info-and-options-wrapper
+      min-height: 500px
+      margin-top: -1px
+      margin-bottom: 15px
+      padding: 10px 20px
+      background-color: $white
+      border: 1px solid $pinkish-grey
+    .option-list
+      padding: 20px
+
+      text-align: center
+      ul
+        display: inline-block
+      li
+        display: block
+        width: $option-btn-width
+        margin-right: 1em
+        float: left
+        &:last-child
+          margin-right: 0
+      .bye
+        +sassy-button("flat", 10px, $fz-m, $lipstick)
+      .add
+        +sassy-button("flat", 10px, $fz-m, $aqua-marine)
+      .option-btn
+        width: 100%
+        text-decoration: none
+        padding: .9em
+        font-weight: bolder
+
+    .chat-content-wrapper
+      height: 420px
+      padding: 10px
+      border: 1px solid $warm-grey
+    .chat-form-wrapper
+      height: 100px
+      margin-top: 15px
+      margin-bottom: 10px
+      padding: 10px
+      border: 1px solid $warm-grey
+
+  .send-message
+    +sassy-button("flat", 10px, $fz-m, $khaki-green)
+    width: $option-btn-width
+    padding: .9em
+    float: right
+
+
+

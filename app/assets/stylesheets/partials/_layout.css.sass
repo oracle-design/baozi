@@ -14,3 +14,15 @@
 
 %m0auto
   margin: 0 auto
+
+body
+  background-image: asset-url('bgnoise_lg.png')
+  +image-2x('bgnoise_lg_@2X.png', 100px, 100px)
+  font-family: Helvetica, Arial, sans-serif
+
+.container
+  @extend %m0auto
+  width: 1024px
+
+.row
+  +clearfix
