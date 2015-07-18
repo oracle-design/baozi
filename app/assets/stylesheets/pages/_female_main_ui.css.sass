@@ -73,11 +73,28 @@
           span
             display: inline-block
             margin-top: .8em
+          .name
+            display: block
+          .health-point
+            display: none
+            font-size: $fz-xl
+            margin-top: .5em
+            i
+              margin-right: .5em
+              &:last-child
+                margin-right: 0
+              &.true
+                color: $scarlet
+              &.false
+                color: $pinkish-grey
+
           &.actived
             background-color: $white
             border: 1px solid $pinkish-grey
             border-bottom: none
             font-weight: bolder
+            .health-point
+              display: inline-block
 
       .next-round-btn
         display: block
