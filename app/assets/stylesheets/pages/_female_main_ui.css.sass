@@ -57,6 +57,7 @@
         padding-right: 10px
         .baozi-unit
           display: block
+          position: relative
           +span(2)
           padding: 10px
           padding-top: 20px
@@ -73,12 +74,30 @@
           span
             display: inline-block
             margin-top: .8em
+          .notification-badge
+            $badge-size: 28px
+
+            display: block
+            position: absolute
+            width: $badge-size
+            height: $badge-size
+            right: 25px
+            top: 10px
+            +border-radius(50%)
+            background-color: $red
+            color: $white
+            line-height: $badge-size
+            text-align: center
           .name
             display: block
           .health-point
             display: none
-            font-size: $fz-xl
+            position: absolute
+            left: 0
+            bottom: 0
+            width: 100%
             margin-top: .5em
+            font-size: $fz-xl
             i
               margin-right: .5em
               &:last-child
