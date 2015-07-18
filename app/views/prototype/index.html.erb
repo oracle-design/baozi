@@ -55,8 +55,9 @@
           <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
         </div>
         <div class="chat-form-wrapper">
-          <form action="#">
+          <form action="#test">
             <textarea type="text" placeholder="What's in your mind...?"></textarea>
+            <button type="submit" hidden>Submit</button>
           </form>
         </div>
       </div>
@@ -73,5 +74,6 @@
   <script>
     $(document).ready(Baozi.tabSelectorInit());
     $(document).ready(Baozi.baoziSelectorInit());
+    $(document).ready(Baozi.sendMessageBtnInit());
   </script>
 <% end %>

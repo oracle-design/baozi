@@ -28,3 +28,14 @@ Baozi.baoziSelectorInit = ->
     baoziList.find('.actived').removeClass('actived')
     $(@).addClass('actived')
   # todo: ajax
+
+# 送出訊息
+Baozi.sendMessageBtnInit = ->
+  realSubmitBtn = $('.chat-form-wrapper button')
+  chatTextarea = $('.chat-form-wrapper textarea')
+  sendMessageBtn = $('.send-message')
+
+  sendMessageBtn.on 'click', ->
+    realSubmitBtn.click()
+    chatTextarea.val('')
+
