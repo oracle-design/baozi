@@ -125,9 +125,52 @@
         font-weight: bolder
 
     .chat-content-wrapper
+      $avatar-width: 38px
+
       height: 420px
       padding: 10px
       border: 1px solid $warm-grey
+      .message-wrapper
+        .user-info
+          line-height: $avatar-width
+          .avatar
+            display: block
+            width: $avatar-width
+            img
+              max-width: 100%
+              +border-radius(50%)
+          .name
+            font-size: $fz-xs
+          .message-content
+            font-size: $fz-l
+            p
+              margin: 0
+              margin-bottom: .5em
+
+        &.target
+          .user-info
+            .info
+              float: left
+            .avatar
+              float: left
+            .name
+              padding-left: 1em
+          .message-content
+            padding-left: $avatar-width * 1.5
+
+        &.self
+          .user-info
+            .info
+              float: right
+            .avatar
+              float: right
+            .name
+              padding-right: 1em
+          .message-content
+            padding-right: $avatar-width * 1.5
+            text-align: right
+
+
     .chat-form-wrapper
       height: 100px
       margin-top: 15px

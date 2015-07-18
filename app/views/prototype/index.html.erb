@@ -23,7 +23,7 @@
       <div class="baozi-list-wrapper row">
         <div class="baozi-list">
           <ul>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: true} %>
+            <%= render partial: 'partials/baozi_unit', locals: {name: "Deja Hauck", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: true} %>
             <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg", actived: false} %>
             <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/mlane/128.jpg", actived: false} %>
             <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg", actived: false} %>
@@ -45,7 +45,39 @@
           </ul>
         </div>
         <div class="chat-content-wrapper">
+          <div class="message-wrapper target">
+            <div class="user-info row">
+              <div class="info">
+                <span class="avatar">
+                  <img src="https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg" alt="">
+                </span>
+                <span class="name">
+                  Deja Hauck
+                </span>
+              </div>
+            </div>
+            <div class="message-content">
+              <p><%= Faker::Lorem.sentence %></p>
+              <p><%= Faker::Lorem.sentence %></p>
+            </div>
+          </div>
 
+          <div class="message-wrapper self">
+            <div class="user-info row">
+              <div class="info">
+                <span class="avatar">
+                  <img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" alt="">
+                </span>
+                <span class="name">
+                  pixeliris
+                </span>
+              </div>
+            </div>
+            <div class="message-content">
+              <p><%= Faker::Lorem.sentence %></p>
+              <p><%= Faker::Lorem.sentence %></p>
+            </div>
+          </div>
         </div>
         <div class="chat-form-wrapper">
 
