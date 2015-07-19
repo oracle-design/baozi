@@ -57,7 +57,7 @@
         <div class="chat-form-wrapper">
           <form action="#test">
             <textarea type="text" placeholder="What's in your mind...?"></textarea>
-            <button type="submit" hidden>Submit</button>
+            <button type="submit" hidden onclick="client_send();">Submit</button>
           </form>
         </div>
       </div>
@@ -75,6 +75,11 @@
   </div>
 </div>
 
+<h2>WebSocket GeeKhmer</h2>
+<input type="text" id="txt">
+<input type="button" onclick="client_send();" value="Send">
+<p id="display"></p>
+
 <%= content_for :handwrite_js do %>
   <script>
     $(document).ready(Baozi.tabSelectorInit());
@@ -83,6 +88,81 @@
   </script>
 <% end %>
 
-<script>
-  var dispatcher = new WebSocketRails('localhost:3000/websocket');
+<script type="text/javascript">
+
+  var dispatcher = new WebSocketRails('localhost:8080/websocket');
+
+  dispatcher.on_open = function(data) {
+    console.log('Connection has been established: ', data);
+  }
+
+  dispatcher.on_error = function(data) {
+    return console.log('on error');
+  };
+
+  dispatcher.on_close = function(data) {
+    return console.log('on close');
+  };
+
+  dispatcher.bind('event_name', function(data) {
+    return console.log(data.message);
+  });
+
+  function client_send() {
+    var task = {
+      name: 'Start taking advantage of WebSockets',
+      completed: false
+    }
+
+    var dispatcher = new WebSocketRails('localhost:3000/websocket');
+    dispatcher.trigger('message', task);
+
+    dispatcher.on_close = function(data) {
+      return console.log('on close');
+    };
+  }
+
 </script>
+
+<!-- 
+<script>
+  var ws = new WebSocket("ws://localhost:8080");
+
+ws.onmessage = function(e){
+  print(e.data);
+};
+
+ws.onopen = function(e){
+  log("websocket open");
+  console.log(e);
+};
+
+ws.onclose = function(e){
+  log("websocket close");
+  console.log(e);
+};
+
+$(function(){
+  $("#btn_post").click(post);
+  $("#message").keydown(function(e){
+    if(e.keyCode == 13) post();
+  });
+});
+
+var post = function(){
+  var name = $("#name").val();
+  var mes = $("#message").val();
+  ws.send(name+" : "+mes);
+  $("input#message").val("");
+};
+
+var log = function(msg){
+  console.log(msg);
+  $("#chat").prepend($("<li>").text("[log] "+msg));
+};
+
+var print = function(msg){
+  $("#chat").prepend($("<li>").text(msg));
+};
+</script>
+ -->
