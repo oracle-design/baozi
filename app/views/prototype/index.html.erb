@@ -61,11 +61,6 @@
           </form>
         </div>
       </div>
-      <div>
-      <input id="name" size="15" type="text" value="NAME">
-      <input id="message" size="80" type="text" value="hello hello">
-      <input id="btn_post" type="button" value="post">
-    </div>
 
       <!-- send message button -->
       <div class="row">
@@ -76,6 +71,7 @@
 </div>
 
 <h2>WebSocket GeeKhmer</h2>
+
 <input type="text" id="txt">
 <input type="button" onclick="client_send();" value="Send">
 <p id="display"></p>
@@ -86,43 +82,55 @@
     $(document).ready(Baozi.baoziSelectorInit());
     $(document).ready(Baozi.sendMessageBtnInit());
   </script>
-<% end %>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<script type="text/javascript">
+  <script type="text/javascript">
+  
+    function client_send() {
+      var task = {
+        user_name: 'vincent',
+        msg_body: document.getElementById("txt").value
+      }
 
-  var dispatcher = new WebSocketRails('localhost:8080/websocket');
+      //send message and reset the txt
+      var dispatcher = new WebSocketRails('localhost:3000/websocket');
 
-  dispatcher.on_open = function(data) {
-    console.log('Connection has been established: ', data);
-  }
+      dispatcher.on_open = function(data) {
+        console.log('Connection has been established: ', data);
+      };
 
-  dispatcher.on_error = function(data) {
-    return console.log('on error');
-  };
+      dispatcher.bind('new_message', newMessage);
 
-  dispatcher.on_close = function(data) {
-    return console.log('on close');
-  };
+      dispatcher.trigger('new_message', task);  
+      $('#txt').val('')
 
-  dispatcher.bind('event_name', function(data) {
-    return console.log(data.message);
-  });
-
-  function client_send() {
-    var task = {
-      name: 'Start taking advantage of WebSockets',
-      completed: false
+      dispatcher.on_close = function(data) {
+        console.log('on close');
+      };
     }
 
-    var dispatcher = new WebSocketRails('localhost:3000/websocket');
-    dispatcher.trigger('message', task);
+    // var bindEvents = function(){
+    //   dispatcher.bind('new_message', newMessage);
+    // };
 
-    dispatcher.on_close = function(data) {
-      return console.log('on close');
+    // var sendMessage = function(){
+
+    // }
+
+    var newMessage = new function(message){
+      $('.chat-content-wrapper').append("sever send");
+      // alert("newMessage send !");
     };
-  }
 
-</script>
+    // function addCommentToDom(comment) {
+    //   console.log('just received new comment: ' + comment.title);
+    // }
+    // dispatcher.bind('comments.new', addCommentToDom);
+
+  </script>
+<% end %>
+
+
 
 <!-- 
 <script>
