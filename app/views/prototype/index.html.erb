@@ -72,9 +72,13 @@
 
 <h2>WebSocket GeeKhmer</h2>
 
-<input type="text" id="txt">
-<input type="button" onclick="client_send();" value="Send">
-<p id="display"></p>
+<div class="form-inline well">
+  <fieldset>
+    <input type="text" class="input-medium" id="user_name">
+    <input type="text" class="input-xlarge" id="message">
+    <button id="send" class="btn btn-primary">Send</button>
+  </fieldset>
+</div>
 
 <%= content_for :handwrite_js do %>
   <script>
@@ -86,28 +90,31 @@
 
   <script type="text/javascript">
   
-    function client_send() {
-      var task = {
-        user_name: 'vincent',
-        msg_body: document.getElementById("txt").value
-      }
-
-      //send message and reset the txt
-      var dispatcher = new WebSocketRails('localhost:3000/websocket');
-
-      dispatcher.on_open = function(data) {
-        console.log('Connection has been established: ', data);
-      };
-
-      dispatcher.bind('new_message', newMessage);
-
-      dispatcher.trigger('new_message', task);  
-      $('#txt').val('')
-
-      dispatcher.on_close = function(data) {
-        console.log('on close');
-      };
+    function newMessage(message) {
+      $('.chat-content-wrapper').append("server send");
     }
+
+    function bindEvents(){
+      dispatcher.bind('new_message', newMessage);
+      $('#send').on('click', sendMessage);
+    }
+
+    function sendMessage(event){
+      event.preventDefault();
+      message = $('#message').val();
+      dispatcher.trigger('new_message', {user_name: "Vincent", msg_body: message});
+      $('#message').val('')  
+    }
+
+
+    //send message and reset the txt
+    var dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+    dispatcher.on_open = function(data) {
+      console.log('Connection has been established: ', data);
+      bindEvents();
+    };
+
 
     // var bindEvents = function(){
     //   dispatcher.bind('new_message', newMessage);
@@ -117,10 +124,7 @@
 
     // }
 
-    var newMessage = new function(message){
-      $('.chat-content-wrapper').append("sever send");
-      // alert("newMessage send !");
-    };
+    
 
     // function addCommentToDom(comment) {
     //   console.log('just received new comment: ' + comment.title);
