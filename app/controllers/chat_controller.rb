@@ -5,7 +5,7 @@ class ChatController < WebsocketRails::BaseController
   end
 
   def new_message
-    user_msg :new_message, message[:msg_body].dup
+    user_msg :new_message, message.dup
   end
 
   def client_connected
@@ -17,7 +17,15 @@ class ChatController < WebsocketRails::BaseController
   end
 
   def user_msg(ev, msg)
-    broadcast_message :new_message, { msg_body: "you say : server return" }
-    # send_message :new_message, {:message => 'Welcome to the Chat Room!'}
+    msg_body = msg[:msg_body]
+    # broadcast_message :new_message, { msg_body: "Server return : #{msg_body}" }
+    send_to = msg[:send_to].to_i
+    WebsocketRails.users[send_to].send_message('new_message', { msg_body: "Server return : #{msg_body}" })
   end
+
+  def new_user
+    # WebsocketRails.users[data] = data
+    connection_store[data] = { user_name: data}
+  end
+
 end

@@ -55,8 +55,10 @@
           <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
         </div>
         <div class="chat-form-wrapper">
+          <input type="text" class="input-medium" id="user_name">
+          <input type="text" class="input-medium" id="receiver">
           <form action="#test">
-            <textarea type="text" placeholder="What's in your mind...?"></textarea>
+            <textarea type="text" id="message" placeholder="What's in your mind...?"></textarea>
             <button type="submit" hidden onclick="client_send();">Submit</button>
           </form>
         </div>
@@ -64,21 +66,12 @@
 
       <!-- send message button -->
       <div class="row">
-        <button class="send-message">send message</button>
+        <button id="send" class="send-message">send message</button>
       </div>
     </div>
   </div>
 </div>
 
-<h2>WebSocket GeeKhmer</h2>
-
-<div class="form-inline well">
-  <fieldset>
-    <input type="text" class="input-medium" id="user_name">
-    <input type="text" class="input-xlarge" id="message">
-    <button id="send" class="btn btn-primary">Send</button>
-  </fieldset>
-</div>
 
 <%= content_for :handwrite_js do %>
   <script>
@@ -90,8 +83,12 @@
 
   <script type="text/javascript">
   
+    function appendMessage(message) {
+      $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
+    }
+
     function newMessage(message) {
-      $('.chat-content-wrapper').append("server send");
+      appendMessage(message);
     }
 
     function bindEvents(){
@@ -102,34 +99,32 @@
     function sendMessage(event){
       event.preventDefault();
       message = $('#message').val();
-      dispatcher.trigger('new_message', {user_name: "Vincent", msg_body: message});
+      receiver_id = $('#receiver').val();
+      dispatcher.trigger('new_message', {user_name: "Vincent", msg_body: message, send_to: receiver_id});
+      $('.chat-content-wrapper').append("you say : " + message + "</br>");
       $('#message').val('')  
     }
 
+    function createGuestUser(){
+      rand_num = Math.floor(Math.random()*1000);
+      user = rand_num;
+      $('#username').html(user);
+      $('input#user_name').val(user);
+      dispatcher.trigger('new_user', user);
+    }
 
-    //send message and reset the txt
+    //start on socekt
+    var currentChannel = undefined
     var dispatcher = new WebSocketRails('localhost:3000/websocket');
 
     dispatcher.on_open = function(data) {
       console.log('Connection has been established: ', data);
+      createGuestUser();
+
+      // dispatcher.subscribe('pumpbox');
+      
       bindEvents();
     };
-
-
-    // var bindEvents = function(){
-    //   dispatcher.bind('new_message', newMessage);
-    // };
-
-    // var sendMessage = function(){
-
-    // }
-
-    
-
-    // function addCommentToDom(comment) {
-    //   console.log('just received new comment: ' + comment.title);
-    // }
-    // dispatcher.bind('comments.new', addCommentToDom);
 
   </script>
 <% end %>
