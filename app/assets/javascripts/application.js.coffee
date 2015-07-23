@@ -7,7 +7,7 @@
 #= require _plugins
 #= require _app-base
 #= require websocket_rails/main
-
+#= require picks
 
 
 # Now 和 Favorite 兩個 Tab 的切換 function

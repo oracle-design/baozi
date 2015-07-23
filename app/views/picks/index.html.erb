@@ -42,12 +42,11 @@
           <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
         </div>
         <div class="chat-form-wrapper">
-          <input type="text" class="input-medium" id="sender" value="<%= current_user.id %>">
+          <input type="text" class="input-medium" id="user_name">
+          <input type="text" class="input-medium" id="sender" value="<%=current_user.id %>">
           <input type="text" class="input-medium" id="receiver">
-          <form action="#test">
-            <textarea type="text" id="message" placeholder="What's in your mind...?"></textarea>
-            <button type="submit" hidden>Submit</button>
-          </form>
+          <input type="text" id="message" placeholder="What's in your mind...?"></input>
+          
         </div>
       </div>
 
@@ -59,6 +58,8 @@
   </div>
 </div>
 
+<div id="chat" class="well" data-uri="<%= request.host %>:<%= request.port %>/websocket">
+</div>
 
 <%= content_for :handwrite_js do %>
   <script>
@@ -90,56 +91,6 @@
         }
       });
     });
-
-    dispatcher = new WebSocketRails('localhost:3000/websocket');
-
-    dispatcher.on_open = function(data) {
-      console.log('Connection has been established: ', data);
-      createGuestUser();
-      // dispatcher.subscribe('pumpbox');    
-      bindEvents();
-    };
-
-    dispatcher.on_close = function(data) {
-      console.log('Connection has been closed: ', data);
-      
-    };
-    
-
-    function bindEvents(){
-      console.log('Connection bind');
-      dispatcher.bind('new_message', newMessage);
-      $('#send').on('click', sendMessage);
-    }
-
-
-    function appendMessage(message) {
-      $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
-    }
-
-    function newMessage(message) {
-      console.log('receive a new message');
-      appendMessage(message);
-    }
-
-    function sendMessage(event){
-      console.log("send message");
-      event.preventDefault();
-      var message = $('#message').val();
-      var sender_id = $('#sender').val();
-      var receiver_id = $('#receiver').val();
-      dispatcher.trigger('new_message', { sender_id: sender_id, msg_body: message, send_to: receiver_id});
-      $('.chat-content-wrapper').append("you say : " + message + "</br>");
-      $('#message').val('')  
-    }
-
-    function createGuestUser(){
-      user = $('#sender').val();
-      dispatcher.trigger('new_user', user);
-    }
-    
-
-    
 
    </script>
 <% end %>
