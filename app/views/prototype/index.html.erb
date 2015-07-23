@@ -80,20 +80,39 @@
     });
 
 
+    dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+    dispatcher.on_open = function(data) {
+      console.log('Connection has been established: ', data);
+      createGuestUser();
+      // dispatcher.subscribe('pumpbox');    
+      bindEvents();
+    };
+
+    dispatcher.on_close = function(data) {
+      console.log('Connection has been closed: ', data);
+      
+    };
+    
+
+    function bindEvents(){
+      console.log('Connection bind');
+      dispatcher.bind('new_message', newMessage);
+      $('#send').on('click', sendMessage);
+    }
+
+
     function appendMessage(message) {
       $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
     }
 
     function newMessage(message) {
+      console.log('receive a new message');
       appendMessage(message);
     }
 
-    function bindEvents(){
-      dispatcher.bind('new_message', newMessage);
-      $('#send').on('click', sendMessage);
-    }
-
     function sendMessage(event){
+      console.log('send message');
       event.preventDefault();
       message = $('#message').val();
       sender_id = $('#sender').val();
@@ -104,21 +123,19 @@
     }
 
     function createGuestUser(){
+      user = $('#sender').val();
       dispatcher.trigger('new_user', user);
     }
 
-    //start on socekt
-    var currentChannel = undefined
-    var dispatcher = new WebSocketRails('localhost:3000/websocket');
+    // //start on socekt
+    // var currentChannel = undefined
+    // var dispatcher = null;
 
-    dispatcher.on_open = function(data) {
-      console.log('Connection has been established: ', data);
-      createGuestUser();
+    
+    
+    
 
-      // dispatcher.subscribe('pumpbox');
-      
-      bindEvents();
-    };
+    
 
   </script>
 <% end %>
