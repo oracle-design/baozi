@@ -2,24 +2,24 @@ require 'em-websocket'
 
 
 
-Thread.new {
-  EventMachine.run {
-    EventMachine::WebSocket.start(:host => "127.0.0.1", :port => 8080) do |ws|
-      ws.onopen {
-        puts "WebSocket connection open"
-      }
+# Thread.new {
+#   EventMachine.run {
+#     EventMachine::WebSocket.start(:host => "127.0.0.1", :port => 8080) do |ws|
+#       ws.onopen {
+#         puts "WebSocket connection open"
+#       }
 
-      ws.onmessage { |msg|
-        puts "Recived message: #{msg}"
-        ws.send(msg)
-      }
+#       ws.onmessage { |msg|
+#         puts "Recived message: #{msg}"
+#         ws.send(msg)
+#       }
 
-      ws.onclose {
-        puts "WebSocket connection closed"
-      }
-    end
-  }
-}
+#       ws.onclose {
+#         puts "WebSocket connection closed"
+#       }
+#     end
+#   }
+# }
 
 
 

@@ -23,12 +23,9 @@
       <div class="baozi-list-wrapper row">
         <div class="baozi-list">
           <ul>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "Deja Hauck", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: true} %>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg", actived: false} %>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/mlane/128.jpg", actived: false} %>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg", actived: false} %>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/putorti/128.jpg", actived: false} %>
-            <%= render partial: 'partials/baozi_unit', locals: {name: "#{Faker::Name.name}", avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/ok/128.jpg", actived: false} %>
+            <% @users.each do |user| %>
+              <%= render partial: 'partials/baozi_unit', locals: {name: user.id, user_id: user.id, avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: false} %>
+            <% end %>
           </ul>
         </div>
         <a href="#" class="next-round-btn">
@@ -47,15 +44,9 @@
         <div class="chat-content-wrapper">
           <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
           <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
         </div>
         <div class="chat-form-wrapper">
-          <input type="text" class="input-medium" id="user_name">
+          <input type="text" class="input-medium" id="sender" value="<%= current_user.id %>">
           <input type="text" class="input-medium" id="receiver">
           <form action="#test">
             <textarea type="text" id="message" placeholder="What's in your mind...?"></textarea>
@@ -82,7 +73,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
   <script type="text/javascript">
-  
+    $('.baozi-unit').click(function(){
+      $('.actived').removeClass('actived');
+      $(this).addClass('actived');
+      $('#receiver').val($('.actived > .user_id').html());
+    });
+
+
     function appendMessage(message) {
       $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
     }
@@ -99,17 +96,14 @@
     function sendMessage(event){
       event.preventDefault();
       message = $('#message').val();
+      sender_id = $('#sender').val();
       receiver_id = $('#receiver').val();
-      dispatcher.trigger('new_message', {user_name: "Vincent", msg_body: message, send_to: receiver_id});
+      dispatcher.trigger('new_message', {sender_id: sender_id, msg_body: message, send_to: receiver_id});
       $('.chat-content-wrapper').append("you say : " + message + "</br>");
       $('#message').val('')  
     }
 
     function createGuestUser(){
-      rand_num = Math.floor(Math.random()*1000);
-      user = rand_num;
-      $('#username').html(user);
-      $('input#user_name').val(user);
       dispatcher.trigger('new_user', user);
     }
 
