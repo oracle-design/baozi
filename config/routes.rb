@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'prototype#index'
+  root 'picks#index'
+
+  resources :picks do
+    get 'next_round', on: :collection
+  end
+  # get 'next_round' => 'prototype#next_round', as: :next_round
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

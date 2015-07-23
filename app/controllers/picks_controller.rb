@@ -1,4 +1,4 @@
-class PrototypeController < ApplicationController
+class PicksController < ApplicationController
   before_action :authenticate_user!
 
   def index

@@ -24,7 +24,7 @@
         <div class="baozi-list">
           <ul>
             <% @users.each do |user| %>
-              <%= render partial: 'partials/baozi_unit', locals: {name: user.username, user_id: user.id, avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: false} %>
+              <%= render partial: 'partials/baozi_unit', locals: {name: user.id, user_id: user.id, avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: false} %>
             <% end %>
           </ul>
         </div>
@@ -65,14 +65,15 @@
 
 
 <%= content_for :handwrite_js do %>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script>
     $(document).ready(Baozi.tabSelectorInit());
     $(document).ready(Baozi.baoziSelectorInit());
     $(document).ready(Baozi.sendMessageBtnInit());
   </script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ 
 
-  <script type="text/javascript">
+  // <script type="text/javascript">
     $('.baozi-unit').click(function(){
       $('.actived').removeClass('actived');
       $(this).addClass('actived');
@@ -137,7 +138,7 @@
 
     
 
-  </script>
+  // </script>
 <% end %>
 
 
