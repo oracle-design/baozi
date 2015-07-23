@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :picks do
     get 'next_round', on: :collection
     get 'favorite_list', on: :collection
+    get 'add_favorite', on: :collection
   end
   # get 'next_round' => 'prototype#next_round', as: :next_round
   # The priority is based upon order of creation: first created -> highest priority.

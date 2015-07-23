@@ -46,7 +46,7 @@
           <input type="text" class="input-medium" id="receiver">
           <form action="#test">
             <textarea type="text" id="message" placeholder="What's in your mind...?"></textarea>
-            <button type="submit" hidden onclick="client_send();">Submit</button>
+            <button type="submit" hidden>Submit</button>
           </form>
         </div>
       </div>
@@ -67,61 +67,76 @@
     $(document).ready(Baozi.sendMessageBtnInit());
   </script>
  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
   <script type="text/javascript">
-    // $('.baozi-unit').click(function(){
-    //   $('.actived').removeClass('actived');
-    //   $(this).addClass('actived');
-    //   $('#receiver').val($('.actived > .user_id').html());
-    // });
+    $('.baozi-unit').click(function(){
+      $('.actived').removeClass('actived');
+      $(this).addClass('actived');
+      $('#receiver').val($('.actived > .user_id').html());
+    });
 
+    $('.add').click(function (){
+      $.ajax({
+        url: '/picks/add_favorite',
+        type: 'GET',
+        dataType: "json",
+        data: { user_id: $('#receiver').val() },
+        error: function(xhr) {
+          alert('Ajax request 發生錯誤');
+        },
+        success: function(response) {
+          alert('成功加入favorite');
+        }
+      });
+    });
 
-    // dispatcher = new WebSocketRails('localhost:3000/websocket');
+    dispatcher = new WebSocketRails('localhost:3000/websocket');
 
-    // dispatcher.on_open = function(data) {
-    //   console.log('Connection has been established: ', data);
-    //   createGuestUser();
-    //   // dispatcher.subscribe('pumpbox');    
-    //   bindEvents();
-    // };
+    dispatcher.on_open = function(data) {
+      console.log('Connection has been established: ', data);
+      createGuestUser();
+      // dispatcher.subscribe('pumpbox');    
+      bindEvents();
+    };
 
-    // dispatcher.on_close = function(data) {
-    //   console.log('Connection has been closed: ', data);
+    dispatcher.on_close = function(data) {
+      console.log('Connection has been closed: ', data);
       
-    // };
+    };
     
 
-    // function bindEvents(){
-    //   console.log('Connection bind');
-    //   dispatcher.bind('new_message', newMessage);
-    //   $('#send').on('click', sendMessage);
-    // }
+    function bindEvents(){
+      console.log('Connection bind');
+      dispatcher.bind('new_message', newMessage);
+      $('#send').on('click', sendMessage);
+    }
 
 
-    // function appendMessage(message) {
-    //   $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
-    // }
+    function appendMessage(message) {
+      $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
+    }
 
-    // function newMessage(message) {
-    //   console.log('receive a new message');
-    //   appendMessage(message);
-    // }
+    function newMessage(message) {
+      console.log('receive a new message');
+      appendMessage(message);
+    }
 
-    // function sendMessage(event){
-    //   console.log('send message');
-    //   event.preventDefault();
-    //   message = $('#message').val();
-    //   sender_id = $('#sender').val();
-    //   receiver_id = $('#receiver').val();
-    //   dispatcher.trigger('new_message', {sender_id: sender_id, msg_body: message, send_to: receiver_id});
-    //   $('.chat-content-wrapper').append("you say : " + message + "</br>");
-    //   $('#message').val('')  
-    // }
+    function sendMessage(event){
+      console.log("send message");
+      event.preventDefault();
+      var message = $('#message').val();
+      var sender_id = $('#sender').val();
+      var receiver_id = $('#receiver').val();
+      dispatcher.trigger('new_message', { sender_id: sender_id, msg_body: message, send_to: receiver_id});
+      $('.chat-content-wrapper').append("you say : " + message + "</br>");
+      $('#message').val('')  
+    }
 
-    // function createGuestUser(){
-    //   user = $('#sender').val();
-    //   dispatcher.trigger('new_user', user);
-    // }
+    function createGuestUser(){
+      user = $('#sender').val();
+      dispatcher.trigger('new_user', user);
+    }
     
 
     
