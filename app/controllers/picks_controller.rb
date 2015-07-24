@@ -7,7 +7,13 @@ class PicksController < ApplicationController
 
 
   def next_round
-    @users = User.limit(6)
+    
+    array = []
+    
+    6.times.each { array << rand(User.count) + 1 }
+    array = array.uniq
+
+    @users = User.where(id: array)
 
     respond_to do |format|
       format.js
@@ -15,7 +21,7 @@ class PicksController < ApplicationController
   end
 
   def favorite_list
-    @favorites = current_user.favorites
+    @favorites = current_user.favorites.limit(6)
 
     respond_to do |format|
       format.js

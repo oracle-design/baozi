@@ -16,12 +16,22 @@ class Chat.Controller
   template: (message) ->
     html =
       """
-      <div class="message" >
-        <label class="label label-info">
-          [#{message.received}] #{message.user_name}
-        </label>&nbsp;
-        #{message.msg_body}
+      <div class="message-wrapper baozi">
+        <div class="user-info row">
+          <div class="info">
+            <span class="avatar">
+              <img src="https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg" alt="">
+            </span>
+            <span class="name">
+              #{message.user_name}
+            </span>
+          </div>
+        </div>
+        <div class="message-content">
+          #{message.msg_body}
+        </div>
       </div>
+
       """
     $(html)
 

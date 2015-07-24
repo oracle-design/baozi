@@ -21,12 +21,12 @@ class ChatController < WebsocketRails::BaseController
     #   }
     sender_id = msg[:sender_id]
     msg_body = msg[:msg_body]
-    # broadcast_message :new_message, { msg_body: "Server return : #{msg_body}" }
+    sender_name = User.find(sender_id.to_i).username
     receiver_id = msg[:receiver_id].to_i
     WebsocketRails.users[receiver_id].send_message('new_message', { 
-      user_name: "vincet",
+      user_name: sender_name,
       sender_id: "#{sender_id}", 
-      msg_body: "Server return : #{msg_body}",
+      msg_body: "#{msg_body}",
       received:   Time.now.to_s(:short)
      })
   end

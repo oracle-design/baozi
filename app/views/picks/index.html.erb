@@ -38,15 +38,13 @@
           </ul>
         </div>
         <div class="chat-content-wrapper">
-          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
+          
         </div>
         <div class="chat-form-wrapper">
-          <input type="text" class="input-medium" id="user_name">
-          <input type="text" class="input-medium" id="sender" value="<%=current_user.id %>">
-          <input type="text" class="input-medium" id="receiver">
+          <input type="hidden" class="input-medium" id="user_name" >
+          <input type="hidden" class="input-medium" id="sender" value="<%=current_user.id %>">
+          <input type="hidden" class="input-medium" id="receiver">
           <input type="text" id="message" placeholder="What's in your mind...?"></input>
-          
         </div>
       </div>
 
