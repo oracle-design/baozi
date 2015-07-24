@@ -1,0 +1,5 @@
+<ul>
+  <% @users.each do |user| %>
+    <%= render partial: 'partials/baozi_unit', locals: {name: user.username, user_id: user.id, avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg", actived: false} %>
+  <% end %>
+</ul>

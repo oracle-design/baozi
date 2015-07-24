@@ -11,9 +11,7 @@
       <a href="#" class="tab-btn now">
         <span>Now</span>
       </a>
-      <a href="#" class="tab-btn favorite">
-        <span>Favorite</span>
-      </a>
+      <span><%= link_to "Favorite", favorite_list_picks_path, :remote => true, class: "tab-btn favorite" %></span>
     </div>
 
     <!-- Main content -->
@@ -28,9 +26,7 @@
             <% end %>
           </ul>
         </div>
-        <a href="#" class="next-round-btn">
-          <span>Next Round</span>
-        </a>
+        <span><%= link_to "nest round", next_round_picks_path, :remote => true, class: "next-round-btn" %></span>
       </div>
 
       <!-- infomation and option area -->
@@ -42,16 +38,13 @@
           </ul>
         </div>
         <div class="chat-content-wrapper">
-          <%= render partial: 'partials/message_layout', locals: {role: 'baozi', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg', name: 'Deja Hauck'} %>
-          <%= render partial: 'partials/message_layout', locals: {role: 'self', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg', name: 'pixeliris'} %>
+          
         </div>
         <div class="chat-form-wrapper">
-          <input type="text" class="input-medium" id="sender" value="<%= current_user.id %>">
-          <input type="text" class="input-medium" id="receiver">
-          <form action="#test">
-            <textarea type="text" id="message" placeholder="What's in your mind...?"></textarea>
-            <button type="submit" hidden onclick="client_send();">Submit</button>
-          </form>
+          <input type="hidden" class="input-medium" id="user_name" >
+          <input type="hidden" class="input-medium" id="sender" value="<%=current_user.id %>">
+          <input type="hidden" class="input-medium" id="receiver">
+          <input type="text" id="message" placeholder="What's in your mind...?"></input>
         </div>
       </div>
 
@@ -63,6 +56,8 @@
   </div>
 </div>
 
+<div id="chat" class="well" data-uri="<%= request.host %>:<%= request.port %>/websocket">
+</div>
 
 <%= content_for :handwrite_js do %>
   <script>
@@ -70,6 +65,7 @@
     $(document).ready(Baozi.baoziSelectorInit());
     $(document).ready(Baozi.sendMessageBtnInit());
   </script>
+ 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
   <script type="text/javascript">
@@ -79,65 +75,22 @@
       $('#receiver').val($('.actived > .user_id').html());
     });
 
+    $('.add').click(function (){
+      $.ajax({
+        url: '/picks/add_favorite',
+        type: 'GET',
+        dataType: "json",
+        data: { user_id: $('#receiver').val() },
+        error: function(xhr) {
+          alert('Ajax request 發生錯誤');
+        },
+        success: function(response) {
+          alert('成功加入favorite');
+        }
+      });
+    });
 
-    dispatcher = new WebSocketRails('localhost:3000/websocket');
-
-    dispatcher.on_open = function(data) {
-      console.log('Connection has been established: ', data);
-      createGuestUser();
-      // dispatcher.subscribe('pumpbox');    
-      bindEvents();
-    };
-
-    dispatcher.on_close = function(data) {
-      console.log('Connection has been closed: ', data);
-      
-    };
-    
-
-    function bindEvents(){
-      console.log('Connection bind');
-      dispatcher.bind('new_message', newMessage);
-      $('#send').on('click', sendMessage);
-    }
-
-
-    function appendMessage(message) {
-      $('.chat-content-wrapper').append(message["msg_body"] + "</br>");
-    }
-
-    function newMessage(message) {
-      console.log('receive a new message');
-      appendMessage(message);
-    }
-
-    function sendMessage(event){
-      console.log('send message');
-      event.preventDefault();
-      message = $('#message').val();
-      sender_id = $('#sender').val();
-      receiver_id = $('#receiver').val();
-      dispatcher.trigger('new_message', {sender_id: sender_id, msg_body: message, send_to: receiver_id});
-      $('.chat-content-wrapper').append("you say : " + message + "</br>");
-      $('#message').val('')  
-    }
-
-    function createGuestUser(){
-      user = $('#sender').val();
-      dispatcher.trigger('new_user', user);
-    }
-
-    // //start on socekt
-    // var currentChannel = undefined
-    // var dispatcher = null;
-
-    
-    
-    
-
-    
-
-  </script>
+   </script>
 <% end %>
 
 
